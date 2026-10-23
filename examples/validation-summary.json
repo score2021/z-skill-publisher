@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-23",
+  "environment": {
+    "client": "codex-cli 0.162.1",
+    "configured_model": "gpt-6.1-sol",
+    "reasoning_effort": "high"
+  },
+  "behavior_results": [
+    {
+      "case": "mixed-evidence old/new",
+      "result": "PASS",
+      "evidence": "均保留明确认可规则，区分成功与认可，撤销竞品分析默认，不固化 Python；实际未写文件。"
+    },
+    {
+      "case": "exact-name old/new",
+      "result": "PASS_WITH_OBSERVED_DIFFERENCE",
+      "evidence": "均保留 team-guide 调用名；旧版输出未保留 UI 的 z- 偏好，新版显示 z-Team Guide 并仍调用 $team-guide。"
+    },
+    {
+      "case": "existing-prefix",
+      "result": "PASS",
+      "evidence": "保留 z-lunch-picker，没有重复前缀，仅输出候选。"
+    },
+    {
+      "case": "installed-discovery",
+      "result": "PASS",
+      "evidence": "真实已安装目标按名称调用，读取原位新版 authoring/naming；book_donation_helper 变为 z-book-donation-helper。"
+    },
+    {
+      "case": "evaluate-only",
+      "result": "PASS",
+      "evidence": "目标文件集合与字节保持不变，输出证据与方案。"
+    },
+    {
+      "case": "plain-readme",
+      "result": "PASS",
+      "evidence": "未读取 publisher；文件只将端口 3000 替换为 3100。"
+    },
+    {
+      "case": "narrow-update",
+      "result": "PASS",
+      "evidence": "仅一条负责人规则变化；名称、README、调用策略不变；另一个干净 CLI 实测输出采购负责人待认领，保留签到小王、日期、场地与预算未知。"
+    },
+    {
+      "case": "noncoding-creation and local acceptance",
+      "result": "PASS_AFTER_CONTINUATION_AND_ARTIFACT_REPAIR",
+      "evidence": "生成活动交接 skill、README、可复制输入和展示。生成首轮在自设 300 秒时限内未完成验收；接续会话识别安装错误及展示问题，外层修复样例安装命令、替换为实际输出，并复验。"
+    },
+    {
+      "case": "generated README task",
+      "result": "PASS",
+      "evidence": "独立 CLI 原样执行 README 请求，指出两类时间问题、缺负责人和未确认方案，并保留日期/时区不足的限制。"
+    },
+    {
+      "case": "generated unseen input",
+      "result": "PASS",
+      "evidence": "独立 CLI 保留 14:00 与 15:00 冲突，不擅自择一；采购待认领；领取钥匙保持已完成。"
+    }
+  ],
+  "failure_history": [
+    {
+      "case": "noncoding-creation",
+      "initial": "TIMEOUT after 300 seconds",
+      "resolution": "保留已生成文件，从本地验收接续，不声称首轮完整通过。"
+    },
+    {
+      "case": "generated README install",
+      "initial": "变量紧邻中文标点导致 /bin/sh set -u 退出 1",
+      "resolution": "只将 $skill_target；改为 ${skill_target}；，最终原样执行及 5 类冲突检查全部通过。"
+    },
+    {
+      "case": "generated showcase",
+      "initial": "示意混淆确认/完成状态并推出未给出的钥匙期限",
+      "resolution": "使用独立 CLI 的完整实际输出替换示意，同步 README 来源、边界和验证状态。"
+    }
+  ],
+  "limits": [
+    "少量代表性任务，未证明跨模型或统计可靠性",
+    "README 候选输出样例不包含安装或行为验收生成的候选 skill",
+    "原始执行日志与个人环境信息不随包发布",
+    "秘密扫描与远端发布复验状态另按本次发布记录报告"
+  ],
+  "release_package_checks": {
+    "runtime_matches_validated_skill": true,
+    "readme_installation": [
+      {
+        "case": "fresh-install-quoted-unicode-space-source",
+        "pass": true
+      },
+      {
+        "case": "repeat-install-refused",
+        "pass": true
+      },
+      {
+        "case": "existing-modern-dir",
+        "pass": true
+      },
+      {
+        "case": "modern-broken-link",
+        "pass": true
+      },
+      {
+        "case": "existing-legacy-file",
+        "pass": true
+      },
+      {
+        "case": "custom-broken-link",
+        "pass": true
+      }
+    ],
+    "readme_exact_prompt": {
+      "client": "codex-cli 0.162.1",
+      "configured_model": "gpt-6.1-sol",
+      "exit": 0,
+      "files_written": 0,
+      "observed": "保留 z-lunch-picker 名称；预算未知不假设金额，冲突先说明；输出候选正文，不写文件。"
+    },
+    "relative_links": "PASS",
+    "standard_validator": "PASS",
+    "secret_scanner": "NOT_RUN",
+    "github_publication_at_prepublication_check": "NOT_YET_PERFORMED"
+  }
+}

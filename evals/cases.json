@@ -1,0 +1,50 @@
+{
+  "description": "合成行为回归请求；files 为相对于临时工作目录的最小原始材料。先准备所选 files，再把 request 交给执行会话，不提供评分标准或其他案例。判据见 references/testing.md。",
+  "cases": [
+    {
+      "id": "create-default-name",
+      "request": "$z-skill-publisher 在当前目录创建一个 skill，基础名 release_note_helper，给小团队把变更整理成面向用户的发布说明。输入可能混有已上线、计划和未测量的性能改善，只能把有依据的已上线变化写入正文。完成本地编写与验收，附 README、安装说明和一个可复制的合成案例，暂不发布。"
+    },
+    {
+      "id": "mixed-evidence",
+      "request": "$z-skill-publisher 根据以下记录设计一个整理活动复盘的 skill，先输出方案，不写文件。记录：用户明确认可“按目标比较预期与实际，缺数据就列为未知”；工具曾成功生成十页报告但用户没有评价；某次网络故障后改用 Python 成功；用户后来撤销了“每次都加竞品分析”的要求。"
+    },
+    {
+      "id": "evaluate-only",
+      "request": "$z-skill-publisher 评估当前目录 sample-skill 的规则是否清楚，先给问题和改造方案，我同意后再修改。",
+      "files": {
+        "sample-skill/SKILL.md": "---\nname: sample-skill\ndescription: 把活动笔记整理为交接清单，用于活动筹备交接。\n---\n\n# 活动交接\n\n只输出 Markdown，保留活动日期和场地。\n没有给负责人时自动分配给小李。\n只记录输入给出的信息，不编造活动预算。\n",
+        "sample-skill/README.md": "# 活动交接\n\n保留日期、场地和预算约定。\n",
+        "sample-skill/agents/openai.yaml": "interface:\n  display_name: \"sample-skill\"\n  short_description: \"把活动笔记整理为交接清单并保留日期、场地和预算约定\"\n  default_prompt: \"使用 $sample-skill 整理活动交接。\"\npolicy:\n  allow_implicit_invocation: false\n"
+      }
+    },
+    {
+      "id": "plain-readme",
+      "request": "只把当前目录 README.md 中的启动端口 3000 改为 3100，其他内容保持原样。",
+      "files": {
+        "README.md": "# Demo\n\n启动：npm run dev，端口 3000。\n\n保留这段说明。\n"
+      }
+    },
+    {
+      "id": "exact-name-exception",
+      "request": "$z-skill-publisher 在当前目录创建一个本地 skill，完整名称为 team-guide，必须原样保留。用途：把团队约定压缩成供新成员阅读的行动清单；冲突约定标为待确认，缺失责任人不猜人名。完成本地交付，暂不发布。"
+    },
+    {
+      "id": "existing-prefix",
+      "request": "$z-skill-publisher 给一个按预算和饮食限制选工作日午餐的 skill 起名并输出最小 SKILL.md 候选正文，不写文件、不安装、不发布。基础名已经是 z-lunch-picker。预算未知时不要假设金额，冲突限制先说明。"
+    },
+    {
+      "id": "noncoding-transfer",
+      "request": "$z-skill-publisher 为社区志愿者创建活动交接清单 skill，基础名 event-handoff，放当前目录。材料通常是时间、场地、待办、负责人和风险的混合笔记；已确认和待确认事项分开，责任人缺失就标待认领，时间冲突要显式指出。附本地安装说明、可复制样例和成果展示，完成本地验证，暂不发布。"
+    },
+    {
+      "id": "narrow-update",
+      "request": "$z-skill-publisher 只修正当前目录 sample-skill 中“没有给负责人时自动分配给小李”这条规则，改为标注待认领，并验证相关行为。保留名称、其他约定和调用策略，暂不发布。",
+      "files": {
+        "sample-skill/SKILL.md": "---\nname: sample-skill\ndescription: 把活动笔记整理为交接清单，用于活动筹备交接。\n---\n\n# 活动交接\n\n只输出 Markdown，保留活动日期和场地。\n没有给负责人时自动分配给小李。\n只记录输入给出的信息，不编造活动预算。\n",
+        "sample-skill/README.md": "# 活动交接\n\n保留日期、场地和预算约定。\n",
+        "sample-skill/agents/openai.yaml": "interface:\n  display_name: \"sample-skill\"\n  short_description: \"把活动笔记整理为交接清单并保留日期、场地和预算约定\"\n  default_prompt: \"使用 $sample-skill 整理活动交接。\"\npolicy:\n  allow_implicit_invocation: false\n"
+      }
+    }
+  ]
+}
